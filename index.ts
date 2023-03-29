@@ -1,15 +1,15 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 
-import http from "http"
-import StompServer from 'stompServer'
+const http = require("http");
+const StompServer = require('stompServer');
  
-var server = http.createServer();
-var stompServer = new StompServer({server: server});
+const server = http.createServer();
+const stompServer = new StompServer({server: server});
  
 server.listen(61614);
  
-stompServer.subscribe("/**", function(msg, headers) {
+stompServer.subscribe("/**", function(msg:any, headers:any) {
   var topic = headers.destination;
   console.log(topic, "->", msg);
 });
@@ -26,6 +26,8 @@ app.get('/', (req: Request, res: Response) => {
   res.send({ some: 'Express + TypeScript Server'} );
 });
 
-app.listen(port, () => {
+const serverObj = app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
+
+// add serverObj to our stomp server
